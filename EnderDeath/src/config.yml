@@ -1,0 +1,10 @@
+round:
+    time: 15
+    team1: 'c'
+    team1: '9'
+messages:
+    deathMessage: '{1}&r zabil {2}'
+    joinHelp: '&lAby dolaczyc wpisz /start'
+    winMessage: '&lWygrala druzyna {1}'
+commands:
+    joinCommand: 'start'
