@@ -2,6 +2,7 @@ package pl.socialCraft.enderdeath.listeners;
 
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EnderPearl;
@@ -19,12 +20,12 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
 import pl.socialCraft.enderdeath.Config;
-
-
-import ru.tehkode.permissions.bukkit.PermissionsEx;
+import pl.socialCraft.enderdeath.EnderDeath;
+import pl.socialCraft.enderdeath.timers.SpawnTimer;
 
 public class PlayerListener implements Listener{
 	@EventHandler
@@ -47,7 +48,7 @@ public class PlayerListener implements Listener{
 			e.setCancelled(true);
 		}
 		else if (e.getEntityType() == EntityType.PLAYER && e.getDamager() instanceof Player){
-			if (PermissionsEx.getUser((Player) e.getEntity()).getPrefix().equalsIgnoreCase(PermissionsEx.getUser((Player) e.getDamager()).getPrefix())){
+			if (EnderDeath.getRound().getPlayerTeam((Player) e.getEntity()) == EnderDeath.getRound().getPlayerTeam((Player) e.getDamager())){
 				e.setCancelled(true);
 			}
 		}
@@ -69,7 +70,7 @@ public class PlayerListener implements Listener{
 	public void onCommand(PlayerCommandPreprocessEvent e){
 		if (e.getMessage().equalsIgnoreCase(Config.getCommand("join"))){
 			e.setCancelled(true);
-			
+			EnderDeath.getRound().join(e.getPlayer());
 		}
 	}
 	@EventHandler
@@ -83,5 +84,9 @@ public class PlayerListener implements Listener{
 		if (e.getEntity().getKiller() != null){
 			e.setDeathMessage(Config.getMessage("deathMessage", e.getEntity().getKiller().getDisplayName(), e.getEntity().getDisplayName()));
 		}
+	}
+	@EventHandler
+	public void onSpawn(PlayerRespawnEvent e){
+		Bukkit.getScheduler().scheduleSyncDelayedTask(EnderDeath.getInstance(), new SpawnTimer(e.getPlayer()), 5);
 	}
 }

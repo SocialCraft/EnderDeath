@@ -6,6 +6,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import pl.socialCraft.enderdeath.EnderDeath;
 import pl.socialCraft.enderdeath.Team;
 
 
@@ -15,9 +16,9 @@ public class SpawnTimer implements Runnable {
 	private String	playerName;
 	private Team	team;
 
-	public SpawnTimer(Player player, Team team){
+	public SpawnTimer(Player player){
 		this.playerName = player.getName();
-		this.team = team;
+		this.team = EnderDeath.getRound().getPlayerTeam(player);
 	}
 	
 	@Override

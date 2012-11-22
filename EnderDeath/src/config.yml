@@ -6,5 +6,6 @@ messages:
     deathMessage: '{1}&r zabil {2}'
     joinHelp: '&lAby dolaczyc wpisz /start'
     winMessage: '&lWygrala druzyna {1}'
+    noWinMessage: '&lRemis'
 commands:
     joinCommand: 'start'
