@@ -1,6 +1,6 @@
-package com.stirante.enderdeath.timers;
+package pl.socialCraft.enderdeath.timers;
 
-import com.stirante.enderdeath.Round;
+import pl.socialCraft.enderdeath.Round;
 
 public class RoundTimer implements Runnable {
 	

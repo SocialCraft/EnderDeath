@@ -1,4 +1,4 @@
-package com.stirante.enderdeath;
+package pl.socialCraft.enderdeath;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;

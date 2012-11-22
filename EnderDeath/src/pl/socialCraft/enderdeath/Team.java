@@ -1,4 +1,4 @@
-package com.stirante.enderdeath;
+package pl.socialCraft.enderdeath;
 
 import java.util.ArrayList;
 import java.util.HashMap;

@@ -1,4 +1,4 @@
-package com.stirante.enderdeath.timers;
+package pl.socialCraft.enderdeath.timers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -6,7 +6,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import com.stirante.enderdeath.Team;
+import pl.socialCraft.enderdeath.Team;
+
 
 public class SpawnTimer implements Runnable {
 	

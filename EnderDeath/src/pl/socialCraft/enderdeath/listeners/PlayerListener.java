@@ -1,4 +1,4 @@
-package com.stirante.enderdeath.listeners;
+package pl.socialCraft.enderdeath.listeners;
 
 import java.util.List;
 
@@ -21,7 +21,8 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.stirante.enderdeath.Config;
+import pl.socialCraft.enderdeath.Config;
+
 
 import ru.tehkode.permissions.bukkit.PermissionsEx;
 

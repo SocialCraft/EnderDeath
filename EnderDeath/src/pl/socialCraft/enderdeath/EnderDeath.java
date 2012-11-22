@@ -1,8 +1,9 @@
-package com.stirante.enderdeath;
+package pl.socialCraft.enderdeath;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.stirante.enderdeath.listeners.PlayerListener;
+import pl.socialCraft.enderdeath.listeners.PlayerListener;
+
 
 public class EnderDeath extends JavaPlugin {
 	private Round	round;

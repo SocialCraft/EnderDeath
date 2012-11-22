@@ -1,9 +1,10 @@
-package com.stirante.enderdeath;
+package pl.socialCraft.enderdeath;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
-import com.stirante.enderdeath.timers.RoundTimer;
+import pl.socialCraft.enderdeath.timers.RoundTimer;
+
 
 public class Round {
 	private Team team1;
