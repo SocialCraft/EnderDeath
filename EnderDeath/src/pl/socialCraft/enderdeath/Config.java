@@ -17,11 +17,13 @@ public class Config {
 	}
 	public static String getMessage(String node, String...params) {
 		String message = config.getString("messages." + node);
-		for (ChatColor color : ChatColor.values()) {
-			message = message.replaceAll("&" + color.getChar(), color.toString());
-		}
 		for (int i = 0; i < params.length; i++) {
-			message = message.replaceAll("{" + i + "}", params[i]);
+			if (message.contains("{" + i + "}"))
+				message = message.replace("{" + i + "}", params[i]);
+		}
+		for (ChatColor color : ChatColor.values()) {
+			if (message.contains("&" + color.getChar()))
+				message = message.replaceAll("&" + color.getChar(), color.toString());
 		}
 		return message;
 	}

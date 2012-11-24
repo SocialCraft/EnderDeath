@@ -26,7 +26,7 @@ public class Team {
 	public void join(Player player){
 		players.add(player.getName());
 		points.put(player.getName(), 0);
-		player.setDisplayName(color + player.getName());
+		player.setDisplayName(color + player.getName() + ChatColor.RESET);
 		player.setPlayerListName(color + player.getName());
 		player.getInventory().clear();
 		player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
@@ -34,6 +34,7 @@ public class Team {
 		item.addEnchantment(Enchantment.ARROW_INFINITE, 1);
 		player.getInventory().addItem(item);
 		player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
+		player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
 	}
 	public void reset(){
 		players = new ArrayList<String>();
@@ -51,5 +52,18 @@ public class Team {
 	}
 	public String getTeamName() {
 		return color.toString() + color.name();
+	}
+	public void addPoint(Player player){
+		if (!points.containsKey(player.getName())){
+			points.put(player.getName(), 1);
+		}
+		else {
+			points.put(player.getName(), getPlayerPoints(player) + 1);
+		}
+	}
+	public void quit(Player player) {
+		points.remove(player.getName());
+		players.remove(player.getName());
+		player.getInventory().clear();
 	}
 }

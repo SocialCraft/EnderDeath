@@ -20,6 +20,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,7 +36,7 @@ public class PlayerListener implements Listener{
 	@EventHandler
 	public void onShoot(EntityShootBowEvent e){
 		if (e.getProjectile() instanceof Arrow){
-			EnderPearl ender = e.getProjectile().getWorld().spawn(e.getProjectile().getLocation(), EnderPearl.class);
+			EnderPearl ender = e.getEntity().launchProjectile(EnderPearl.class);
 			ender.setVelocity(e.getProjectile().getVelocity());
 			ender.setShooter(((Projectile)e.getProjectile()).getShooter());
 			e.setCancelled(true);
@@ -56,12 +57,12 @@ public class PlayerListener implements Listener{
 	@EventHandler
 	public void onHit(ProjectileHitEvent e){
 		if (e.getEntityType() == EntityType.ENDER_PEARL){
-			List<Entity> entities = e.getEntity().getNearbyEntities(1, 1, 1);
+			List<Entity> entities = e.getEntity().getNearbyEntities(2, 2, 2);
 			for (int i = 0; i < entities.size(); i++) {
 				Entity ent = entities.get(i);
 				if (ent instanceof LivingEntity){
 					if (ent != e.getEntity().getShooter())
-					((LivingEntity)ent).damage(2, e.getEntity().getShooter());
+					((LivingEntity)ent).damage(4, e.getEntity().getShooter());
 				}
 			}
 		}
@@ -70,7 +71,10 @@ public class PlayerListener implements Listener{
 	public void onCommand(PlayerCommandPreprocessEvent e){
 		if (e.getMessage().equalsIgnoreCase(Config.getCommand("join"))){
 			e.setCancelled(true);
+			if (EnderDeath.getRound().getPlayerTeam(e.getPlayer()) == null)
 			EnderDeath.getRound().join(e.getPlayer());
+			else 
+				e.getPlayer().sendMessage(Config.getMessage("hasTeam"));
 		}
 	}
 	@EventHandler
@@ -89,4 +93,9 @@ public class PlayerListener implements Listener{
 	public void onSpawn(PlayerRespawnEvent e){
 		Bukkit.getScheduler().scheduleSyncDelayedTask(EnderDeath.getInstance(), new SpawnTimer(e.getPlayer()), 5);
 	}
+	@EventHandler
+	public void onQuit(PlayerQuitEvent e){
+		EnderDeath.getRound().getPlayerTeam(e.getPlayer()).quit(e.getPlayer());
+	}
+	
 }

@@ -11,6 +11,7 @@ public class EnderDeath extends JavaPlugin {
 	private static EnderDeath	instance;
 
 	public void onEnable(){
+		Config.init(this);
 		getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 		round = new Round(this);
 		instance = this;

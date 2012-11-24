@@ -1,11 +1,12 @@
 round:
     time: 15
     team1: 'c'
-    team1: '9'
+    team2: '9'
 messages:
     deathMessage: '{1}&r zabil {2}'
     joinHelp: '&lAby dolaczyc wpisz /start'
     winMessage: '&lWygrala druzyna {1}'
     noWinMessage: '&lRemis'
+    hasTeam: 'Juz jestes w grze'
 commands:
-    joinCommand: 'start'
+    join: '/start'
