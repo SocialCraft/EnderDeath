@@ -76,13 +76,13 @@ public class PlayerListener implements Listener{
 	public void onDeath(PlayerDeathEvent e){
 		e.setDroppedExp(0);
 		for (int i = 0; i < e.getDrops().size(); i++) {
-			if (e.getDrops().get(i).getType() == Material.GOLDEN_APPLE)
-				e.getDrops().remove(i);
+			e.getDrops().clear();
 		}
+		if (e.getEntity().getKiller() == null)
+			return ;
 		e.getDrops().add(new ItemStack(Material.GOLDEN_APPLE));
-		if (e.getEntity().getKiller() != null){
-			e.setDeathMessage(Config.getMessage("deathMessage", e.getEntity().getKiller().getDisplayName(), e.getEntity().getDisplayName()));
-		}
+		e.setDeathMessage(Config.getMessage("deathMessage", e.getEntity().getKiller().getDisplayName(), e.getEntity().getDisplayName()));
+		EnderDeath.getRound().getPlayerTeam(e.getEntity()).addPoint(e.getEntity().getKiller());
 	}
 	@EventHandler
 	public void onSpawn(PlayerRespawnEvent e){

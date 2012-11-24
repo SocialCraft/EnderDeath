@@ -10,6 +10,8 @@ public class Commands {
 		commands = new HashMap<String, Command>();
 		registerCommand(JoinCommand.class);
 		registerCommand(DebugCommand.class);
+		registerCommand(StatsCommand.class);
+		registerCommand(TimeCommand.class);
 	}
 	public static void registerCommand(Class<? extends Command> clazz){
 		try {

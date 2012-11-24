@@ -30,7 +30,8 @@ public class SpawnTimer implements Runnable {
 		item.addEnchantment(Enchantment.ARROW_INFINITE, 1);
 		player.getInventory().addItem(item);
 		player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
-		player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, team.getPlayerPoints(player)));
+		if (team.getPlayerPoints(player) > 0)
+			player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, team.getPlayerPoints(player)));
 		player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
 	}
 	
