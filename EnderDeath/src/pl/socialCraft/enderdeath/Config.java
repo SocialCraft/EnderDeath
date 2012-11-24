@@ -27,6 +27,18 @@ public class Config {
 		}
 		return message;
 	}
+	public static String getMessage1(String node, String[] params) {
+		String message = config.getString("messages." + node);
+		for (int i = 0; i < params.length; i++) {
+			if (message.contains("{" + i + "}"))
+				message = message.replace("{" + i + "}", params[i]);
+		}
+		for (ChatColor color : ChatColor.values()) {
+			if (message.contains("&" + color.getChar()))
+				message = message.replaceAll("&" + color.getChar(), color.toString());
+		}
+		return message;
+	}
 	public static String getError(String node, String...params) {
 		String message = config.getString("errors." + node);
 		for (int i = 0; i < params.length; i++) {

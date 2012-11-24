@@ -6,10 +6,13 @@ errors:
     parametersError: 'Niepoprawna ilosc argumentow!'
     permissionError: 'Nie masz permisji!'
 messages:
-    deathMessage: '{1}&r zabil {2}'
+    deathMessage: '{0}&r zabil {1}'
     joinHelp: '&lAby dolaczyc wpisz /start'
-    winMessage: '&lWygrala druzyna {1}'
+    winMessage: '&lWygrala druzyna {0}'
     noWinMessage: '&lRemis'
-    hasTeam: 'Juz jestes w grze'
+    hasTeam: '&cJuz jestes w grze'
+    time: '&bPozostalo {0} do konca rundy'
 commands:
     join: 'start'
+    time: 'time'
+    stats: 'stats'

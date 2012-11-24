@@ -3,6 +3,7 @@ package pl.socialCraft.enderdeath;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -37,6 +38,9 @@ public class Team {
 		player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
 	}
 	public void reset(){
+		for (int i = 0; i < getSize(); i++) {
+			quit(Bukkit.getPlayerExact(players.get(i)));
+		}
 		players = new ArrayList<String>();
 		points = new HashMap<String, Integer>();
 		teamPoints = 0;
@@ -62,8 +66,15 @@ public class Team {
 		}
 	}
 	public void quit(Player player) {
+		player.setDisplayName(player.getName());
+		player.setPlayerListName(player.getName());
 		points.remove(player.getName());
 		players.remove(player.getName());
 		player.getInventory().clear();
+	}
+	public void broadcast(String message) {
+		for (int i = 0; i < players.size(); i++) {
+			Bukkit.getPlayerExact(players.get(i)).sendMessage(message);
+		}
 	}
 }

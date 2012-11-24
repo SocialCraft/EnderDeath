@@ -13,7 +13,15 @@ public class DebugCommand extends Command {
 			sender.sendMessage(Config.getCommand(args[1]));
 		}
 		if (args[0].equalsIgnoreCase("message")){
-			sender.sendMessage(Config.getMessage(args[1]));
+			if (args.length == 2)
+				sender.sendMessage(Config.getMessage(args[1]));
+			else {
+				String[] params = new String[args.length - 2];
+				for (int i = 2; i < args.length; i++) {
+					params[i - 2] = args[i];
+				}
+				sender.sendMessage(Config.getMessage1(args[1], args));
+			}
 		}
 		if (args[0].equalsIgnoreCase("error")){
 			sender.sendMessage(Config.getError(args[1]));

@@ -90,7 +90,8 @@ public class PlayerListener implements Listener{
 	}
 	@EventHandler
 	public void onQuit(PlayerQuitEvent e){
-		EnderDeath.getRound().getPlayerTeam(e.getPlayer()).quit(e.getPlayer());
+		if (EnderDeath.getRound().getPlayerTeam(e.getPlayer()) != null)
+			EnderDeath.getRound().getPlayerTeam(e.getPlayer()).quit(e.getPlayer());
 	}
 	
 }
