@@ -1,7 +1,10 @@
 round:
-    time: 15
+    time: 2
     team1: 'c'
     team2: '9'
+errors:
+    parametersError: 'Niepoprawna ilosc argumentow!'
+    permissionError: 'Nie masz permisji!'
 messages:
     deathMessage: '{1}&r zabil {2}'
     joinHelp: '&lAby dolaczyc wpisz /start'
@@ -9,4 +12,4 @@ messages:
     noWinMessage: '&lRemis'
     hasTeam: 'Juz jestes w grze'
 commands:
-    join: '/start'
+    join: 'start'

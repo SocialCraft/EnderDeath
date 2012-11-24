@@ -26,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 
 import pl.socialCraft.enderdeath.Config;
 import pl.socialCraft.enderdeath.EnderDeath;
+import pl.socialCraft.enderdeath.commands.Commands;
 import pl.socialCraft.enderdeath.timers.SpawnTimer;
 
 public class PlayerListener implements Listener{
@@ -69,13 +70,7 @@ public class PlayerListener implements Listener{
 	}
 	@EventHandler
 	public void onCommand(PlayerCommandPreprocessEvent e){
-		if (e.getMessage().equalsIgnoreCase(Config.getCommand("join"))){
-			e.setCancelled(true);
-			if (EnderDeath.getRound().getPlayerTeam(e.getPlayer()) == null)
-			EnderDeath.getRound().join(e.getPlayer());
-			else 
-				e.getPlayer().sendMessage(Config.getMessage("hasTeam"));
-		}
+		Commands.performCommand(e);
 	}
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e){

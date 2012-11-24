@@ -27,6 +27,14 @@ public class Config {
 		}
 		return message;
 	}
+	public static String getError(String node, String...params) {
+		String message = config.getString("errors." + node);
+		for (int i = 0; i < params.length; i++) {
+			if (message.contains("{" + i + "}"))
+				message = message.replace("{" + i + "}", params[i]);
+		}
+		return ChatColor.DARK_RED + message;
+	}
 	public static ChatColor getColor(String node){
 		return ChatColor.getByChar(config.getString("round." + node));
 	}
