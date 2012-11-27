@@ -3,7 +3,6 @@ package pl.socialCraft.enderdeath.listeners;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.Entity;
@@ -22,7 +21,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.inventory.ItemStack;
 
 import pl.socialCraft.enderdeath.Config;
 import pl.socialCraft.enderdeath.EnderDeath;
@@ -75,14 +73,11 @@ public class PlayerListener implements Listener{
 	@EventHandler
 	public void onDeath(PlayerDeathEvent e){
 		e.setDroppedExp(0);
-		for (int i = 0; i < e.getDrops().size(); i++) {
-			e.getDrops().clear();
-		}
+		e.getDrops().clear();
 		if (e.getEntity().getKiller() == null)
 			return ;
-		e.getDrops().add(new ItemStack(Material.GOLDEN_APPLE));
 		e.setDeathMessage(Config.getMessage("deathMessage", e.getEntity().getKiller().getDisplayName(), e.getEntity().getDisplayName()));
-		EnderDeath.getRound().getPlayerTeam(e.getEntity()).addPoint(e.getEntity().getKiller());
+		EnderDeath.getRound().getPlayerTeam(e.getEntity().getKiller()).addPoint(e.getEntity().getKiller());
 	}
 	@EventHandler
 	public void onSpawn(PlayerRespawnEvent e){

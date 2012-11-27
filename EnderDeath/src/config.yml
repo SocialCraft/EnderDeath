@@ -1,5 +1,5 @@
 round:
-    time: 2
+    time: 5
     team1: 'c'
     team2: '9'
 errors:
@@ -15,4 +15,4 @@ messages:
 commands:
     join: 'start'
     time: 'czas'
-    stats: 'stats'
+    stats: 'staty'

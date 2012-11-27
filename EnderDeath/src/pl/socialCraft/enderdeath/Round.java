@@ -31,7 +31,7 @@ public class Round {
 		if (team2.getScore() > team1.getScore())
 			broadcast(Config.getMessage("winMessage", team2.getTeamName()));
 		if (team1.getScore() == team2.getScore())
-			broadcast(Config.getMessage("winMessage", team1.getTeamName()));
+			broadcast(Config.getMessage("noWinMessage"));
 		team1.reset();
 		team2.reset();
 		Bukkit.getScheduler().cancelTask(taskId);
@@ -48,13 +48,13 @@ public class Round {
 			return ;
 		}
 		if (time == 3){
-			broadcast(String.valueOf(time));
+			broadcast(Config.getMessage("time", String.valueOf(time)));
 		}
 		if (time == 2){
-			broadcast(String.valueOf(time));
+			broadcast(Config.getMessage("time", String.valueOf(time)));
 		}
 		if (time == 1){
-			broadcast(String.valueOf(time));
+			broadcast(Config.getMessage("time", String.valueOf(time)));
 		}
 		start();
 	}

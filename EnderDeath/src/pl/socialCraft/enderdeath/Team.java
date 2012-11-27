@@ -14,11 +14,13 @@ public class Team {
 	private ArrayList<String> players;
 	private ChatColor	color;
 	private HashMap<String, Integer> points;
+	private HashMap<String, ItemStack[]> invs;
 	private int teamPoints;
 	
 	public Team(ChatColor color){
 		players = new ArrayList<String>();
 		points = new HashMap<String, Integer>();
+		invs = new HashMap<String, ItemStack[]>();
 		this.color = color;
 	}
 	public int getSize(){
@@ -29,6 +31,7 @@ public class Team {
 		points.put(player.getName(), 0);
 		player.setDisplayName(color + player.getName() + ChatColor.RESET);
 		player.setPlayerListName(color + player.getName());
+		invs.put(player.getName(), player.getInventory().getContents());
 		player.getInventory().clear();
 		player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
 		ItemStack item = new ItemStack(Material.BOW);
@@ -64,6 +67,8 @@ public class Team {
 		else {
 			points.put(player.getName(), getPlayerPoints(player) + 1);
 		}
+		player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE));
+		teamPoints++;
 	}
 	public void quit(Player player) {
 		player.setDisplayName(player.getName());
@@ -71,6 +76,7 @@ public class Team {
 		points.remove(player.getName());
 		players.remove(player.getName());
 		player.getInventory().clear();
+		player.getInventory().setContents(invs.get(player.getName()));
 	}
 	public void broadcast(String message) {
 		for (int i = 0; i < players.size(); i++) {
