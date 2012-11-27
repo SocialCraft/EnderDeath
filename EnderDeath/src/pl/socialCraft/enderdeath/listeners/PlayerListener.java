@@ -27,66 +27,76 @@ import pl.socialCraft.enderdeath.EnderDeath;
 import pl.socialCraft.enderdeath.commands.Commands;
 import pl.socialCraft.enderdeath.timers.SpawnTimer;
 
-public class PlayerListener implements Listener{
+public class PlayerListener implements Listener {
 	@EventHandler
-	public void onJoin(PlayerJoinEvent e){
+	public void onJoin(PlayerJoinEvent e) {
 		e.getPlayer().sendMessage(Config.getMessage("joinHelp"));
 	}
+	
 	@EventHandler
-	public void onShoot(EntityShootBowEvent e){
-		if (e.getProjectile() instanceof Arrow){
+	public void onShoot(EntityShootBowEvent e) {
+		if (e.getProjectile() instanceof Arrow) {
 			EnderPearl ender = e.getEntity().launchProjectile(EnderPearl.class);
 			ender.setVelocity(e.getProjectile().getVelocity());
-			ender.setShooter(((Projectile)e.getProjectile()).getShooter());
+			ender.setShooter(((Projectile) e.getProjectile()).getShooter());
 			e.setCancelled(true);
 			e.getProjectile().remove();
 		}
 	}
+	
 	@EventHandler
-	public void onDamage(EntityDamageByEntityEvent e){
-		if (e.getEntityType() == EntityType.PLAYER && e.getCause() == DamageCause.FALL){
+	public void onDamage(EntityDamageByEntityEvent e) {
+		if (e.getEntityType() == EntityType.PLAYER
+				&& e.getCause() == DamageCause.FALL)
 			e.setCancelled(true);
-		}
-		else if (e.getEntityType() == EntityType.PLAYER && e.getDamager() instanceof Player){
-			if (EnderDeath.getRound().getPlayerTeam((Player) e.getEntity()) == EnderDeath.getRound().getPlayerTeam((Player) e.getDamager())){
+		else if (e.getEntityType() == EntityType.PLAYER
+				&& e.getDamager() instanceof Player)
+			if (EnderDeath.getRound().getPlayerTeam((Player) e.getEntity()) == EnderDeath
+					.getRound().getPlayerTeam((Player) e.getDamager()))
 				e.setCancelled(true);
-			}
-		}
 	}
+	
 	@EventHandler
-	public void onHit(ProjectileHitEvent e){
-		if (e.getEntityType() == EntityType.ENDER_PEARL){
+	public void onHit(ProjectileHitEvent e) {
+		if (e.getEntityType() == EntityType.ENDER_PEARL) {
 			List<Entity> entities = e.getEntity().getNearbyEntities(2, 2, 2);
 			for (int i = 0; i < entities.size(); i++) {
 				Entity ent = entities.get(i);
-				if (ent instanceof LivingEntity){
+				if (ent instanceof LivingEntity)
 					if (ent != e.getEntity().getShooter())
-					((LivingEntity)ent).damage(4, e.getEntity().getShooter());
-				}
+						((LivingEntity) ent).damage(4, e.getEntity()
+								.getShooter());
 			}
 		}
 	}
+	
 	@EventHandler
-	public void onCommand(PlayerCommandPreprocessEvent e){
+	public void onCommand(PlayerCommandPreprocessEvent e) {
 		Commands.performCommand(e);
 	}
+	
 	@EventHandler
-	public void onDeath(PlayerDeathEvent e){
+	public void onDeath(PlayerDeathEvent e) {
 		e.setDroppedExp(0);
 		e.getDrops().clear();
-		if (e.getEntity().getKiller() == null)
-			return ;
-		e.setDeathMessage(Config.getMessage("deathMessage", e.getEntity().getKiller().getDisplayName(), e.getEntity().getDisplayName()));
-		EnderDeath.getRound().getPlayerTeam(e.getEntity().getKiller()).addPoint(e.getEntity().getKiller());
+		if (e.getEntity().getKiller() == null) return;
+		e.setDeathMessage(Config.getMessage("deathMessage", e.getEntity()
+				.getKiller().getDisplayName(), e.getEntity().getDisplayName()));
+		EnderDeath.getRound().getPlayerTeam(e.getEntity().getKiller())
+				.addPoint(e.getEntity().getKiller());
 	}
+	
 	@EventHandler
-	public void onSpawn(PlayerRespawnEvent e){
-		Bukkit.getScheduler().scheduleSyncDelayedTask(EnderDeath.getInstance(), new SpawnTimer(e.getPlayer()), 5);
+	public void onSpawn(PlayerRespawnEvent e) {
+		Bukkit.getScheduler().scheduleSyncDelayedTask(EnderDeath.getInstance(),
+				new SpawnTimer(e.getPlayer()), 5);
 	}
+	
 	@EventHandler
-	public void onQuit(PlayerQuitEvent e){
+	public void onQuit(PlayerQuitEvent e) {
 		if (EnderDeath.getRound().getPlayerTeam(e.getPlayer()) != null)
-			EnderDeath.getRound().getPlayerTeam(e.getPlayer()).quit(e.getPlayer());
+			EnderDeath.getRound().getPlayerTeam(e.getPlayer())
+					.quit(e.getPlayer());
 	}
 	
 }

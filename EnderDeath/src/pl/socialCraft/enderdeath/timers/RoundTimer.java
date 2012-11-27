@@ -5,8 +5,8 @@ import pl.socialCraft.enderdeath.Round;
 public class RoundTimer implements Runnable {
 	
 	private Round	round;
-
-	public RoundTimer(Round round){
+	
+	public RoundTimer(Round round) {
 		this.round = round;
 	}
 	

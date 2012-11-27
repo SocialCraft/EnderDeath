@@ -8,6 +8,8 @@ errors:
 messages:
     deathMessage: '{0}&r zabil {1}'
     joinHelp: '&lAby dolaczyc wpisz /start'
+    startHelp: '&lAby spawdzic statystyki wpisz /staty'
+    startHelp1: '&lAby zobaczyc, ile zostalo czasu wpisz /czas'
     winMessage: '&lWygrala druzyna {0}'
     noWinMessage: '&lRemis'
     hasTeam: '&cJuz jestes w grze'

@@ -9,16 +9,14 @@ import org.bukkit.inventory.ItemStack;
 import pl.socialCraft.enderdeath.EnderDeath;
 import pl.socialCraft.enderdeath.Team;
 
-
 public class SpawnTimer implements Runnable {
-	
 	
 	private String	playerName;
 	private Team	team;
-
-	public SpawnTimer(Player player){
-		this.playerName = player.getName();
-		this.team = EnderDeath.getRound().getPlayerTeam(player);
+	
+	public SpawnTimer(Player player) {
+		playerName = player.getName();
+		team = EnderDeath.getRound().getPlayerTeam(player);
 	}
 	
 	@Override
@@ -31,7 +29,9 @@ public class SpawnTimer implements Runnable {
 		player.getInventory().addItem(item);
 		player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
 		if (team.getPlayerPoints(player) > 0)
-			player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, team.getPlayerPoints(player)));
+			player.getInventory().addItem(
+					new ItemStack(Material.GOLDEN_APPLE, team
+							.getPlayerPoints(player)));
 		player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
 	}
 	

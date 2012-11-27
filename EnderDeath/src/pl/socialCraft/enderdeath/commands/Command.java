@@ -5,32 +5,33 @@ import org.bukkit.entity.Player;
 import pl.socialCraft.enderdeath.Config;
 
 public abstract class Command {
-
-	public void preprocessCommand(Player sender, String cmd, String[] args){
-		if (getMinimumArgsLength() > args.length){
+	
+	public void preprocessCommand(Player sender, String cmd, String[] args) {
+		if (getMinimumArgsLength() > args.length) {
 			sender.sendMessage(Config.getError("parametersError"));
-			return ;
+			return;
 		}
-		if (getRequiredPermission().equalsIgnoreCase("op") && !sender.isOp()){
+		if (getRequiredPermission().equalsIgnoreCase("op") && !sender.isOp()) {
 			sender.sendMessage(Config.getError("permissionError"));
-			return ;
+			return;
 		}
-		if (!sender.hasPermission(getRequiredPermission()) && !getRequiredPermission().equalsIgnoreCase("")){
+		if (!sender.hasPermission(getRequiredPermission())
+				&& !getRequiredPermission().equalsIgnoreCase("")) {
 			sender.sendMessage(Config.getError("permissionError"));
-			return ;
+			return;
 		}
 		performCommand(sender, cmd, args);
 	}
 	
 	public abstract void performCommand(Player sender, String cmd, String[] args);
-
+	
 	public abstract String getLabel();
-
-	public int getMinimumArgsLength(){
+	
+	public int getMinimumArgsLength() {
 		return 0;
 	}
-
-	public String getRequiredPermission(){
+	
+	public String getRequiredPermission() {
 		return "";
 	}
 }
