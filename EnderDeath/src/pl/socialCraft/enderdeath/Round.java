@@ -14,8 +14,8 @@ public class Round {
 	
 	public Round(EnderDeath plugin) {
 		this.plugin = plugin;
-		team1 = new Team(Config.getColor("team1"));
-		team2 = new Team(Config.getColor("team2"));
+		team1 = new Team("team1");
+		team2 = new Team("team2");
 		time = Config.getInt("round.time") * 60;
 	}
 	

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -16,12 +17,15 @@ public class Team {
 	private HashMap<String, Integer>		points;
 	private HashMap<String, ItemStack[]>	invs;
 	private int								teamPoints;
+	private Location						spawn;
+	private String							name;
+	private ArrayList<String> 				toDelete;
 	
-	public Team(ChatColor color) {
+	public Team(String name) {
+		this.name = name;
 		players = new ArrayList<String>();
 		points = new HashMap<String, Integer>();
 		invs = new HashMap<String, ItemStack[]>();
-		this.color = color;
 	}
 	
 	public int getSize() {
@@ -31,16 +35,8 @@ public class Team {
 	public void join(Player player) {
 		players.add(player.getName());
 		points.put(player.getName(), 0);
-		player.setDisplayName(color + player.getName() + ChatColor.RESET);
-		player.setPlayerListName(color + player.getName());
 		invs.put(player.getName(), player.getInventory().getContents());
-		player.getInventory().clear();
-		player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
-		ItemStack item = new ItemStack(Material.BOW);
-		item.addEnchantment(Enchantment.ARROW_INFINITE, 1);
-		player.getInventory().addItem(item);
-		player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
-		player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
+		spawnPlayer(player);
 	}
 	
 	public void reset() {
@@ -64,6 +60,9 @@ public class Team {
 	}
 	
 	public String getTeamName() {
+		if (color == null){
+			color = Config.getColor(name);
+		}
 		return color.toString() + color.name();
 	}
 	
@@ -79,14 +78,44 @@ public class Team {
 	public void quit(Player player) {
 		player.setDisplayName(player.getName());
 		player.setPlayerListName(player.getName());
+		player.getInventory().clear();
+		toDelete.add(player.getName());
+		player.setHealth(0);
+	}
+	
+	public void deletePlayer(Player player){
 		points.remove(player.getName());
 		players.remove(player.getName());
-		player.getInventory().clear();
 		player.getInventory().setContents(invs.get(player.getName()));
+		invs.remove(player.getName());
 	}
+	
 	
 	public void broadcast(String message) {
 		for (int i = 0; i < players.size(); i++)
 			Bukkit.getPlayerExact(players.get(i)).sendMessage(message);
+	}
+
+	public void spawnPlayer(Player player) {
+		if (color == null || spawn == null){
+			color = Config.getColor(name);
+			spawn = Config.getLocation(name + "Spawn", player.getWorld());
+		}
+		player.setDisplayName(color + player.getName() + ChatColor.RESET);
+		player.setPlayerListName(color + player.getName());
+		player.getInventory().clear();
+		player.getInventory().addItem(new ItemStack(Material.STONE_SWORD));
+		ItemStack item = new ItemStack(Material.BOW);
+		item.addEnchantment(Enchantment.ARROW_INFINITE, 1);
+		player.getInventory().addItem(item);
+		player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
+		if (getPlayerPoints(player) > 0)
+			player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, getPlayerPoints(player)));
+		player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
+		player.teleport(spawn);
+	}
+
+	public boolean isForDelete(Player player) {
+		return toDelete.contains(player.getName());
 	}
 }

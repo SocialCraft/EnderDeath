@@ -88,8 +88,11 @@ public class PlayerListener implements Listener {
 	
 	@EventHandler
 	public void onSpawn(PlayerRespawnEvent e) {
-		Bukkit.getScheduler().scheduleSyncDelayedTask(EnderDeath.getInstance(),
-				new SpawnTimer(e.getPlayer()), 5);
+		if (EnderDeath.getRound().getPlayerTeam(e.getPlayer()) != null && !EnderDeath.getRound().getPlayerTeam(e.getPlayer()).isForDelete(e.getPlayer()))
+			Bukkit.getScheduler().scheduleSyncDelayedTask(EnderDeath.getInstance(),
+					new SpawnTimer(e.getPlayer()), 5);
+		else if (EnderDeath.getRound().getPlayerTeam(e.getPlayer()) != null && EnderDeath.getRound().getPlayerTeam(e.getPlayer()).isForDelete(e.getPlayer()))
+			EnderDeath.getRound().getPlayerTeam(e.getPlayer()).deletePlayer(e.getPlayer());
 	}
 	
 	@EventHandler

@@ -1,7 +1,9 @@
 round:
     time: 5
     team1: 'c'
+    team1Spawn: '-71 77 462'
     team2: '9'
+    team2Spawn: '-71 77 441'
 errors:
     parametersError: 'Niepoprawna ilosc argumentow!'
     permissionError: 'Nie masz permisji!'

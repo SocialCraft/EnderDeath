@@ -1,6 +1,8 @@
 package pl.socialCraft.enderdeath;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -56,5 +58,10 @@ public class Config {
 	
 	public static String getCommand(String node) {
 		return config.getString("commands." + node);
+	}
+	
+	public static Location getLocation(String node, World world) {
+		String[] split = config.getString("round." + node).split(" ");
+		return new Location(world, Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
 	}
 }
