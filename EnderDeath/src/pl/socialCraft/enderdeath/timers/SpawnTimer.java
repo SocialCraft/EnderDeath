@@ -19,8 +19,7 @@ public class SpawnTimer implements Runnable {
 	@Override
 	public void run() {
 		Player player = Bukkit.getPlayerExact(playerName);
-		if (team != null)
-			team.spawnPlayer(player);
+		if (team != null) team.spawnPlayer(player);
 	}
 	
 }

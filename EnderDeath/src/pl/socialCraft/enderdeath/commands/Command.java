@@ -8,16 +8,16 @@ public abstract class Command {
 	
 	public void preprocessCommand(Player sender, String cmd, String[] args) {
 		if (getMinimumArgsLength() > args.length) {
-			sender.sendMessage(Config.getError("parametersError"));
+			sender.sendMessage(Config.getError("parameters"));
 			return;
 		}
 		if (getRequiredPermission().equalsIgnoreCase("op") && !sender.isOp()) {
-			sender.sendMessage(Config.getError("permissionError"));
+			sender.sendMessage(Config.getError("permission"));
 			return;
 		}
 		if (!sender.hasPermission(getRequiredPermission())
 				&& !getRequiredPermission().equalsIgnoreCase("")) {
-			sender.sendMessage(Config.getError("permissionError"));
+			sender.sendMessage(Config.getError("permission"));
 			return;
 		}
 		performCommand(sender, cmd, args);

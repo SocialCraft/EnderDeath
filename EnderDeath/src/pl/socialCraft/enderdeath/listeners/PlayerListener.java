@@ -30,7 +30,8 @@ import pl.socialCraft.enderdeath.timers.SpawnTimer;
 public class PlayerListener implements Listener {
 	@EventHandler
 	public void onJoin(PlayerJoinEvent e) {
-		e.getPlayer().sendMessage(Config.getMessage("joinHelp"));
+		e.getPlayer().sendMessage(
+				Config.getMessage("joinHelp", Config.getCommand("join")));
 	}
 	
 	@EventHandler
@@ -80,19 +81,19 @@ public class PlayerListener implements Listener {
 		e.setDroppedExp(0);
 		e.getDrops().clear();
 		if (e.getEntity().getKiller() == null) return;
-		e.setDeathMessage(Config.getMessage("deathMessage", e.getEntity()
-				.getKiller().getDisplayName(), e.getEntity().getDisplayName()));
+		e.setDeathMessage(Config.getMessage("death", e.getEntity().getKiller()
+				.getDisplayName(), e.getEntity().getDisplayName()));
 		EnderDeath.getRound().getPlayerTeam(e.getEntity().getKiller())
 				.addPoint(e.getEntity().getKiller());
+		EnderDeath.getRound().getPlayerTeam(e.getEntity())
+				.addDeath(e.getEntity());
 	}
 	
 	@EventHandler
 	public void onSpawn(PlayerRespawnEvent e) {
-		if (EnderDeath.getRound().getPlayerTeam(e.getPlayer()) != null && !EnderDeath.getRound().getPlayerTeam(e.getPlayer()).isForDelete(e.getPlayer()))
-			Bukkit.getScheduler().scheduleSyncDelayedTask(EnderDeath.getInstance(),
-					new SpawnTimer(e.getPlayer()), 5);
-		else if (EnderDeath.getRound().getPlayerTeam(e.getPlayer()) != null && EnderDeath.getRound().getPlayerTeam(e.getPlayer()).isForDelete(e.getPlayer()))
-			EnderDeath.getRound().getPlayerTeam(e.getPlayer()).deletePlayer(e.getPlayer());
+		if (EnderDeath.getRound().getPlayerTeam(e.getPlayer()) != null)
+			Bukkit.getScheduler().scheduleSyncDelayedTask(
+					EnderDeath.getInstance(), new SpawnTimer(e.getPlayer()), 5);
 	}
 	
 	@EventHandler

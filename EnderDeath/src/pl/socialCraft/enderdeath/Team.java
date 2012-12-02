@@ -15,17 +15,20 @@ public class Team {
 	private ArrayList<String>				players;
 	private ChatColor						color;
 	private HashMap<String, Integer>		points;
+	private HashMap<String, Integer>		deaths;
 	private HashMap<String, ItemStack[]>	invs;
 	private int								teamPoints;
 	private Location						spawn;
 	private String							name;
-	private ArrayList<String> 				toDelete;
+	private String							teamName;
 	
 	public Team(String name) {
 		this.name = name;
 		players = new ArrayList<String>();
 		points = new HashMap<String, Integer>();
+		deaths = new HashMap<String, Integer>();
 		invs = new HashMap<String, ItemStack[]>();
+		teamName = Config.getString("round." + name + ".name");
 	}
 	
 	public int getSize() {
@@ -60,10 +63,8 @@ public class Team {
 	}
 	
 	public String getTeamName() {
-		if (color == null){
-			color = Config.getColor(name);
-		}
-		return color.toString() + color.name();
+		if (color == null) color = Config.getColor(name + ".color");
+		return color.toString() + teamName;
 	}
 	
 	public void addPoint(Player player) {
@@ -79,27 +80,22 @@ public class Team {
 		player.setDisplayName(player.getName());
 		player.setPlayerListName(player.getName());
 		player.getInventory().clear();
-		toDelete.add(player.getName());
-		player.setHealth(0);
-	}
-	
-	public void deletePlayer(Player player){
 		points.remove(player.getName());
 		players.remove(player.getName());
-		player.getInventory().setContents(invs.get(player.getName()));
 		invs.remove(player.getName());
+		player.getInventory().setContents(invs.get(player.getName()));
+		player.teleport(Config.getLocation("spawn", player.getWorld()));
 	}
-	
 	
 	public void broadcast(String message) {
 		for (int i = 0; i < players.size(); i++)
 			Bukkit.getPlayerExact(players.get(i)).sendMessage(message);
 	}
-
+	
 	public void spawnPlayer(Player player) {
-		if (color == null || spawn == null){
-			color = Config.getColor(name);
-			spawn = Config.getLocation(name + "Spawn", player.getWorld());
+		if (color == null || spawn == null) {
+			color = Config.getColor(name + ".color");
+			spawn = Config.getLocation(name + ".spawn", player.getWorld());
 		}
 		player.setDisplayName(color + player.getName() + ChatColor.RESET);
 		player.setPlayerListName(color + player.getName());
@@ -110,12 +106,17 @@ public class Team {
 		player.getInventory().addItem(item);
 		player.getInventory().addItem(new ItemStack(Material.COOKED_BEEF, 64));
 		if (getPlayerPoints(player) > 0)
-			player.getInventory().addItem(new ItemStack(Material.GOLDEN_APPLE, getPlayerPoints(player)));
+			player.getInventory().addItem(
+					new ItemStack(Material.GOLDEN_APPLE,
+							getPlayerPoints(player)));
 		player.getInventory().addItem(new ItemStack(Material.ARROW, 1));
 		player.teleport(spawn);
 	}
-
-	public boolean isForDelete(Player player) {
-		return toDelete.contains(player.getName());
+	
+	public void addDeath(Player player) {
+		if (!deaths.containsKey(player.getName()))
+			deaths.put(player.getName(), 1);
+		else
+			deaths.put(player.getName(), deaths.get(player.getName()) + 1);
 	}
 }

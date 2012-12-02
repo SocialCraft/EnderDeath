@@ -27,11 +27,11 @@ public class Round {
 	
 	public void stop() {
 		if (team1.getScore() > team2.getScore())
-			broadcast(Config.getMessage("winMessage", team1.getTeamName()));
+			broadcast(Config.getMessage("win", team1.getTeamName()));
 		if (team2.getScore() > team1.getScore())
-			broadcast(Config.getMessage("winMessage", team2.getTeamName()));
+			broadcast(Config.getMessage("win", team2.getTeamName()));
 		if (team1.getScore() == team2.getScore())
-			broadcast(Config.getMessage("noWinMessage"));
+			broadcast(Config.getMessage("noWin"));
 		team1.reset();
 		team2.reset();
 		Bukkit.getScheduler().cancelTask(taskId);

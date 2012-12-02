@@ -1,19 +1,24 @@
 round:
     time: 5
-    team1: 'c'
-    team1Spawn: '-71 77 462'
-    team2: '9'
-    team2Spawn: '-71 77 441'
+    spawn: '-71 77 441'
+    team1:
+        name: 'RED'
+        color: 'c'
+        spawn: '-71 77 462'
+    team2:
+        name: 'BLUE'
+        color: '9'
+        spawn: '-71 77 441'
 errors:
-    parametersError: 'Niepoprawna ilosc argumentow!'
-    permissionError: 'Nie masz permisji!'
+    parameters: 'Niepoprawna ilosc argumentow!'
+    permission: 'Nie masz permisji!'
 messages:
-    deathMessage: '{0}&r zabil {1}'
-    joinHelp: '&lAby dolaczyc wpisz /start'
-    startHelp: '&lAby spawdzic statystyki wpisz /staty'
-    startHelp1: '&lAby zobaczyc, ile zostalo czasu wpisz /czas'
-    winMessage: '&lWygrala druzyna {0}'
-    noWinMessage: '&lRemis'
+    death: '{0}&r zabil {1}'
+    joinHelp: '&lAby dolaczyc wpisz /{0}'
+    startHelp: '&lAby spawdzic statystyki wpisz /{0}'
+    startHelp1: '&lAby zobaczyc, ile zostalo czasu wpisz /{0}'
+    win: '&lWygrala druzyna {0}'
+    noWin: '&lRemis'
     hasTeam: '&cJuz jestes w grze'
     time: '&bPozostalo {0} do konca rundy'
 commands:

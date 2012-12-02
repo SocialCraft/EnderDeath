@@ -62,6 +62,11 @@ public class Config {
 	
 	public static Location getLocation(String node, World world) {
 		String[] split = config.getString("round." + node).split(" ");
-		return new Location(world, Integer.parseInt(split[0]), Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+		return new Location(world, Integer.parseInt(split[0]),
+				Integer.parseInt(split[1]), Integer.parseInt(split[2]));
+	}
+	
+	public static String getString(String node) {
+		return config.getString(node);
 	}
 }

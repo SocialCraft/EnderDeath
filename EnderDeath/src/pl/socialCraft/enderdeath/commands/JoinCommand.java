@@ -10,8 +10,10 @@ public class JoinCommand extends Command {
 	public void performCommand(Player sender, String cmd, String[] args) {
 		if (EnderDeath.getRound().getPlayerTeam(sender) == null) {
 			EnderDeath.getRound().join(sender);
-			sender.sendMessage(Config.getMessage("startHelp"));
-			sender.sendMessage(Config.getMessage("startHelp1"));
+			sender.sendMessage(Config.getMessage("startHelp",
+					Config.getCommand("time")));
+			sender.sendMessage(Config.getMessage("startHelp1",
+					Config.getCommand("stats")));
 		}
 		else
 			sender.sendMessage(Config.getMessage("hasTeam"));

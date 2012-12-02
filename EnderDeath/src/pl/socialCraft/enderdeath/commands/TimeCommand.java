@@ -20,7 +20,15 @@ public class TimeCommand extends Command {
 	}
 	
 	private String formatTime(int time) {
-		return String.valueOf(time / 60) + ":" + String.valueOf(time % 60);
+		String minutes = String.valueOf(time / 60);
+		String seconds = String.valueOf(time % 60);
+		if (minutes.length() == 1)
+			minutes = "0" + minutes;
+		else if (minutes.length() == 0) minutes = "00";
+		if (seconds.length() == 1)
+			seconds = "0" + seconds;
+		else if (seconds.length() == 0) seconds = "00";
+		return minutes + ":" + seconds;
 	}
 	
 }
